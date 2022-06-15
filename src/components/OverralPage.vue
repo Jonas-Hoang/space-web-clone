@@ -10,7 +10,8 @@ export default {
             imgData: {},
             imgData2: {},
             imgData3: {},
-
+            otpBtnClicked: false,
+            number: 5
         }
     },
     async created() {
@@ -19,7 +20,7 @@ export default {
         let two = "https://629038e827f4ba1c65b598c7.mockapi.io/api/v1/ourproject"
         let three = "https://629038e827f4ba1c65b598c7.mockapi.io/api/v1/personel"
 
-    // GET request using axios with async/await
+        // GET request using axios with async/await
         const response = await axios.get(one);
         const response2 = await axios.get(two);
         const response3 = await axios.get(three)
@@ -30,14 +31,21 @@ export default {
 
         console.log(response.data)
         console.log(response2.data)
+        console.log(this.imgData)
+    },
+    methods: {
+        createFourDives(){
+            this.number++;
+            this.otpBtnClicked =true
+            
+        }
         
     },
-   
 }
 </script>
 <template>
   <div class="big">
-      <div class="header">
+    <div class="header">
         <div class="row d-flex justify-content-center">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container ">
@@ -112,14 +120,20 @@ export default {
                 <div class="col-12 col-md-6 col-lg-3 " v-for="index in 4" :key="index">
                     <div class="img-container" >
                         <img class="col-12 imgsrc" :src="imgData[index-1].srcImg" alt="">
-                        <p>Foam</p>
+                        <p>Foam {{index}}</p>
                         <span>Nov 9, 2015</span>
                     </div>
                 </div>
-                
+                <div class="col-12 col-md-6 col-lg-3 " v-for="n in 4" :key="n"   >
+                    <div class="img-container" v-if="otpBtnClicked">
+                        <img class="col-12 imgsrc" :src="imgData[n+3].srcImg" alt="">
+                        <p>Foam {{n+4}}</p>
+                        <span>Nov 9, 2015</span>
+                    </div>
+                </div>
             </div>
             <div class="btn-explore-gallery text-end pt-4">
-                <a id="loadMore" style="cursor: pointer;" >
+                <a id="loadMore" @click="createFourDives()" style="cursor: pointer;" >
                     <p style="margin-bottom: 0px; padding-bottom: 40px;">Explore gallery <i
                             class="fa-solid fa-arrow-right"></i></p>
                 </a>
@@ -145,7 +159,7 @@ export default {
                     </div>
                 </div>
                 <div class="col-12 col-sm-2 divider d-flex justify-content-center">
-                    <i class="fa-duotone fa-rhombus"></i>
+                    <i class="fa-solid fa-rhombus"></i>
                 </div>
                 <div class="col-12 col-sm-5 d-flex flex-column ">
                     <p class="p-heading">The Summit</p>

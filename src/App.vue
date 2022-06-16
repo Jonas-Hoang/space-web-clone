@@ -1,15 +1,17 @@
 <template>
-  
-    <OverralPage />
-  
+  <div class="app">
+    <Header />
+    <router-view></router-view>
+  </div>
+    
 </template>
 
 <script>
-import OverralPage from '@/components/OverralPage.vue'
+import Header from '@/components/Header.vue'
 
 export default {
   components:{
-    OverralPage,
+    Header,
     
   }
 }

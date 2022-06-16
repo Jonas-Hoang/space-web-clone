@@ -1,5 +1,5 @@
 <script>
-
+export let n =0
 import axios from 'axios'
 
 export default {
@@ -7,13 +7,13 @@ export default {
     props: ["url"],
     data(){
         return{
-            imgData: {},
-            imgData2: {},
-            imgData3: {},
+            imgData: null,
+            imgData2: null,
+            imgData3: null,
             otpBtnClicked: false,
-            number: 5
         }
     },
+    
     async created() {
         
         let one = "https://629038e827f4ba1c65b598c7.mockapi.io/api/v1/gallery"
@@ -29,17 +29,49 @@ export default {
         this.imgData2 = response2.data;
         this.imgData3 = response3.data;
 
-        console.log(response.data)
-        console.log(response2.data)
-        console.log(this.imgData)
-    },
-    methods: {
-        createFourDives(){
-            this.number++;
-            this.otpBtnClicked =true
-            
-        }
         
+        console.log(this.imgData)
+        console.log(this.imgData2)
+        console.log(this.imgData3)
+    },
+    
+    methods: {
+        
+        createFourDives(){
+            
+            for(let i =n+4;i<n+8;i++){    
+                let id = this.imgData[i].id;
+                let url = this.imgData[i].srcImg;
+                this.createSquare(url,id)
+            }
+            n+=4;
+        },
+        createSquare(link,id){
+            let getRow = document.getElementsByClassName("row")[3];
+            const div = document.createElement("div");
+            div.setAttribute("class","col-12 col-md-6 col-lg-3");
+            const divImgage = document.createElement("div");
+            divImgage.setAttribute("class","img-container");
+
+            const imgage = document.createElement("img");
+            imgage.setAttribute("class","col-12 imgsrc");
+            imgage.setAttribute("src",link);
+            imgage.setAttribute("alt","");
+
+            const pname = document.createElement("p");
+            pname.innerHTML = ("Foam "+id);
+
+            const spdate = document.createElement("span");
+            spdate.innerHTML = ("Nov 9, 2015");
+            
+
+            div.appendChild(divImgage);
+            divImgage.appendChild(imgage);
+            divImgage.appendChild(pname);
+            divImgage.appendChild(spdate);
+            
+            getRow.append(div);
+        }
     },
 }
 </script>
@@ -116,26 +148,20 @@ export default {
     <div class="gallery" id="explore">
         <div class="container">
             <h2>Bộ Sưu Tập</h2>
-            <div class="row">
-                <div class="col-12 col-md-6 col-lg-3 " v-for="index in 4" :key="index">
-                    <div class="img-container" >
+            <div class="row" v-if="imgData">
+                <div class="col-12 col-md-6 col-lg-3 " v-for="index in 4" :key="index"  ref="imgData">
+                    <div class="img-container"  >
                         <img class="col-12 imgsrc" :src="imgData[index-1].srcImg" alt="">
                         <p>Foam {{index}}</p>
-                        <span>Nov 9, 2015</span>
+                        <span>Nov 9, 2015</span>    
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3 " v-for="n in 4" :key="n"   >
-                    <div class="img-container" v-if="otpBtnClicked">
-                        <img class="col-12 imgsrc" :src="imgData[n+3].srcImg" alt="">
-                        <p>Foam {{n+4}}</p>
-                        <span>Nov 9, 2015</span>
-                    </div>
-                </div>
+                
             </div>
             <div class="btn-explore-gallery text-end pt-4">
                 <a id="loadMore" @click="createFourDives()" style="cursor: pointer;" >
-                    <p style="margin-bottom: 0px; padding-bottom: 40px;">Explore gallery <i
-                            class="fa-solid fa-arrow-right"></i></p>
+                    <button style="margin-bottom: 30px; border:none;">Explore gallery <i
+                            class="fa-solid fa-arrow-right"></i></button>
                 </a>
             </div>
         </div>
@@ -180,9 +206,14 @@ export default {
     <div class="ourproject">
         <div class="container">
             <h2>Dự Án Của Chúng Tôi</h2>
-            <div class="row">
-                <div class="col-12 col-md-12 col-lg-12 col-xl-6 gap-3 justify-content-center d-flex"  v-for="index in 4" :key="index">
-                    <img class="ourProjectImg" style="height:400px;" :src="imgData2[index-1].srcImg" alt="">
+            <div class="row"  v-if="imgData2">
+                <div class="col-12 col-md-12 col-lg-12 
+                col-xl-6 gap-3 justify-content-center d-flex"  v-for="index in 4" :key="index"  ref="imgData2">
+                   <div class="ourProjectContainer" >
+                       
+                       <img class="ourProjectImg" style="height:400px;" :src="imgData2[index-1].srcImg" alt="">
+                   </div>
+                    
                 </div>
             </div>
         </div>
@@ -207,9 +238,11 @@ export default {
                     <p>scaring yourself every day with something new, since-overused by popular culture</p>
                 </div>
                 <div class="col-md-8">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-md-12 col-lg-6 "  v-for="index in 6" :key="index" >
-                             <img :src="imgData2[index].srcImg" alt="" class="detailProjectImg">
+                    <div class="row d-flex justify-content-center" v-if="imgData2">
+                        <div class="col-md-12 col-lg-6 "  v-for="index in 6" :key="index" ref="imgData2">
+                             <div class="pict" >
+                                <img :src="imgData2[index-1].srcImg" alt="" class="detailProjectImg">
+                                </div>
                         </div>
                        
                     </div>
@@ -248,12 +281,14 @@ export default {
                 difficult goals, and scaring yourself every day with something new. A phrase adopted and since-overused
                 by popular culture, it is actually rooted in truth. You should always be pushing your boundaries,
                 striving for your most difficult goals, and scaring yourself every day with something new.</span>
-            <div class="row">
+            <div class="row" v-if="imgData3">
                 <div class="col-md-6 col-lg-3 d-flex flex-column 
-                justify-content-center text-center" v-for="index in 16" :key="index">
-                    <img class="p-img" :src="imgData3[index-1].srcImg" alt="">
-                    <p class="p-name"></p>
-                    <p class="p-work-position"></p>
+                justify-content-center text-center" v-for="index in 16" :key="index"  ref="imgData3">
+                    <div class="bibictn"  >
+                        <img class="p-img" :src="imgData3[index-1].srcImg" alt="">
+                        <p class="p-name"></p>
+                        <p class="p-work-position"></p>
+                    </div>
                 </div>
             </div>
         </div>

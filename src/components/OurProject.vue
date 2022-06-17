@@ -1,3 +1,10 @@
+<script>
+export default {
+  name: "OurProject",
+  props: ["imgData2"]
+ 
+};
+</script>
 <template>
   <div class="ourproject">
     <div class="container">
@@ -52,24 +59,3 @@
   cursor: pointer;
 }
 </style>
-<script>
-export let n = 0;
-import axios from "axios";
-export default {
-  name: "OurProject",
-  data() {
-    return {
-      imgData2: null,
-    };
-  },
-
-  async created() {
-    // GET request using axios with async/await
-
-    const response2 = await axios.get(
-      "https://629038e827f4ba1c65b598c7.mockapi.io/api/v1/ourproject"
-    );
-    this.imgData2 = response2.data;
-  },
-};
-</script>

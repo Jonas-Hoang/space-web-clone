@@ -73,19 +73,6 @@
 import axios from "axios";
 export default {
   name: "Personal",
-  data() {
-    return {
-      imgData3: null,
-    };
-  },
-
-  async created() {
-    // GET request using axios with async/await
-
-    const response = await axios.get(
-      "https://629038e827f4ba1c65b598c7.mockapi.io/api/v1/personel"
-    );
-    this.imgData3 = response.data;
-  },
+  props:["imgData3"]
 };
 </script>

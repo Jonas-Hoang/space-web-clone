@@ -73,16 +73,15 @@ export default {
     },
     
     async created() {
-        
         let x =  await this.createFofo()
         this.imgData = x.data
     },
     
     methods: {
         createFofo(){
-            let one = "https://629038e827f4ba1c65b598c7.mockapi.io/api/v1/gallery"
+            let one =   "https://629038e827f4ba1c65b598c7.mockapi.io/api/v1/gallery"
             // GET request using axios with async/await
-            const response = axios.get(one);
+            const response =  axios.get(one);
             // this.imgData = response.data;
             console.log(response)
             return response

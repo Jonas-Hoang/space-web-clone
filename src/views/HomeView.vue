@@ -1,15 +1,13 @@
 <template>
-  <main v-if="!loading">
-       <Gallery />
+  <main >
+        <Gallery />
         <Customer />
         <OurProject/>
         <DetailProject/>
         <Archivement />
         <Personal />
         <Footer/>
-  </main>
-  <main v-else >
-    
+        
   </main>
 </template>
 
@@ -22,6 +20,7 @@ import DetailProject from '@/components/DetailProject.vue'
 import Archivement from '@/components/Archivement'
 import Personal from '@/components/Personal'
 import Footer from '@/components/Footer'
+
 export default {
   name: 'HomeView',
   components: {
@@ -32,15 +31,7 @@ export default {
     Archivement,
     Personal,
     Footer,
-  },
-  data(){
-    return {
-      loading:true,
-      
-      imgSrc: '',
-      
-      loadingImage: require('../assets/giphy.gif')
-    }
+    
   },
   methods:{
     async fetchData(){
@@ -48,10 +39,9 @@ export default {
         const data = await res.json()
         return data
       },
-    },
+    },  
     async created(){
       const data= await this.fetchData()
-  
       this.imgSrc = data.srcImg;
       this.loading = false
     },
